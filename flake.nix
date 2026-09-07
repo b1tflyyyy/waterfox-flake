@@ -25,7 +25,7 @@
 
       makePackage = system:
         let
-          pkgs = import nixpkgs { inherit system; };
+          pkgs = nixpkgs.legacyPackages.${system};
           cfg = archConfig.${system};
 
           src = pkgs.fetchurl {
@@ -153,19 +153,12 @@
     in
     {
       overlays.default = final: prev: {
-        waterfox = self.packages.${final.system}.default;
+        waterfox = self.packages.${final.stdenv.hostPlatform.system}.default;
       };
 
       packages = forAllSystems (system: {
         default = makePackage system;
         waterfox = makePackage system;
-      });
-
-      apps = forAllSystems (system: {
-        default = {
-          type = "app";
-          program = "${makePackage system}/bin/waterfox";
-        };
       });
     };
 }
