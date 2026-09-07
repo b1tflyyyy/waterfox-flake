@@ -45,7 +45,7 @@ Add the package to `environment.systemPackages`:
 
 {
   environment.systemPackages = [
-    inputs.waterfox.packages.${pkgs.system}.default
+    inputs.waterfox.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 }
 ```
@@ -57,7 +57,7 @@ Or if you manage user packages via Home Manager (`home.nix`):
 
 {
   home.packages = [
-    inputs.waterfox.packages.${pkgs.system}.default
+    inputs.waterfox.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 }
 ```
